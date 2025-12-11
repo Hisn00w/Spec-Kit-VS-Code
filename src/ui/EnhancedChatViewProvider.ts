@@ -672,7 +672,7 @@ specify-cn init --here --ai claude
 
 **CLI 信息：**
 - Spec Kit CLI: ${cliVersion}
-- 工作目录: ${projectStatus.workspaceRoot || '未设置'}
+- 工作目录: ${_projectStatus.workspaceRoot || '未设置'}
 - 平台: ${process.platform}
 
 **检查输出：**
@@ -681,14 +681,14 @@ ${result.output || '检查完成'}
 \`\`\`
 
 **项目进度：**
-- 📋 项目初始化: ${projectStatus.isInitialized ? '✅ 完成' : '❌ 未完成'}
-- 📋 项目宪章: ${projectStatus.hasConstitution ? '✅ 已创建' : '❌ 未创建'}
-- 📝 项目规范: ${projectStatus.hasSpecification ? '✅ 已创建' : '❌ 未创建'}
-- 🗺️ 实施计划: ${projectStatus.hasPlan ? '✅ 已创建' : '❌ 未创建'}
-- ✅ 任务列表: ${projectStatus.hasTasks ? '✅ 已创建' : '❌ 未创建'}
+- 📋 项目初始化: ${_projectStatus.isInitialized ? '✅ 完成' : '❌ 未完成'}
+- 📋 项目宪章: ${_projectStatus.hasConstitution ? '✅ 已创建' : '❌ 未创建'}
+- 📝 项目规范: ${_projectStatus.hasSpecification ? '✅ 已创建' : '❌ 未创建'}
+- 🗺️ 实施计划: ${_projectStatus.hasPlan ? '✅ 已创建' : '❌ 未创建'}
+- ✅ 任务列表: ${_projectStatus.hasTasks ? '✅ 已创建' : '❌ 未创建'}
 
 **下一步建议：**
-${this._getNextStepSuggestion(projectStatus)}`;
+${this._getNextStepSuggestion(_projectStatus)}`;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -709,7 +709,7 @@ ${result.output || cliVersion}
 \`\`\`
 
 **项目状态：**
-- 工作目录: ${projectStatus.workspaceRoot || '未设置'}
+- 工作目录: ${_projectStatus.workspaceRoot || '未设置'}
 - 平台: ${process.platform}`;
     }
 
