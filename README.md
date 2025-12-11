@@ -7,7 +7,7 @@
 
 🌱 一个 VS Code 扩展，基于 `specify-cn` CLI，提供规范驱动开发（Spec-Driven Development）的完整工作流。
 
-通过侧边栏聊天界面和**直接 AI 代理调用**，轻松完成从项目初始化到任务分解的全流程。
+通过智能聊天界面和**自动 AI 代理调用**，轻松完成从项目初始化到任务分解的全流程。支持自然语言交互和精确的斜杠命令。
 
 **🎉 现已发布到 VS Code Marketplace！** [立即安装](https://marketplace.visualstudio.com/items?itemName=hisn0w.spec-kit-vscode)
 
@@ -16,22 +16,24 @@
 ## 功能特性
 
 ✨ **主要功能**
-- 💬 **智能聊天界面** - 在侧边栏与 Spec Kit 助手交互
-- 🤖 **直接 AI 代理调用** - 自动调用 Claude Code、Cursor、Copilot 等 AI 代理执行命令
-- 🚀 **项目初始化** - 快速初始化 SDD 项目，支持多种 AI 助手
-- 📋 **创建宪章** - 建立项目指导原则
-- 📝 **生成规范** - 基于需求生成技术规范
-- 🗺️ **制定计划** - 创建详细的实施计划
-- ✅ **分解任务** - 将计划分解为具体任务
-- 📊 **项目分析** - 实时查看项目进度
-- 🔧 **CLI 检测** - 自动检测和验证 `specify-cn` CLI
+- 💬 **智能聊天界面** - 支持自然语言和斜杠命令交互
+- 🤖 **自动 AI 代理调用** - 无缝调用 Claude Code、Cursor、Copilot 等 AI 代理
+- 🚀 **一键项目初始化** - 可视化界面，支持 17+ AI 助手选择
+- 📋 **项目宪章管理** - 建立和维护项目指导原则
+- 📝 **智能规范生成** - 基于自然语言描述生成技术规范
+- 🗺️ **技术计划制定** - 创建详细的实施计划和架构设计
+- ✅ **任务自动分解** - 将计划分解为可执行的具体任务
+- 📊 **质量检查清单** - 验证需求完整性和一致性
+- � **C项目一致性分析** - 跨制品一致性检查
+- 🔗 **GitHub Issues 集成** - 将任务转换为 GitHub Issues
+- 🔧 **CLI 状态监控** - 实时检测和刷新 CLI 状态
 
 ## 前置要求
 
 - **VS Code** >= 1.90.0
-- **Node.js** >= 18.0.0 (仅用于开发)
+- **Node.js** >= 18.0.0 
 - **specify-cn CLI** - 必须安装
-- **AI 代理** - 推荐安装 Claude Code、Cursor、GitHub Copilot 等（可选，用于自动执行 slash commands）
+- **AI 代理** - 推荐安装 Claude Code（可选，用于自动执行 slash commands）
 
 ### 安装 specify-cn CLI
 
@@ -61,30 +63,7 @@ specify-cn --version
 
 如果命令不可用，请确保 Python 的 bin 目录在 PATH 中。
 
-### 安装 AI 代理（推荐）
 
-为了获得最佳体验，建议安装以下 AI 代理之一：
-
-**Claude Code (推荐)**
-```bash
-# 访问 https://claude.ai/code 下载安装
-```
-
-**GitHub Copilot**
-- 在 VS Code 中安装 GitHub Copilot 扩展
-
-**Cursor**
-```bash
-# 访问 https://cursor.sh 下载安装
-```
-
-**其他支持的 AI 代理**
-- Gemini CLI
-- Qwen Code
-- Codex CLI
-- Windsurf
-
-扩展会自动检测已安装的 AI 代理并直接调用执行 slash commands。
 
 ## 安装扩展
 
@@ -133,15 +112,25 @@ npm run package
    - 点击左侧活动栏中的 🌱 Spec Kit 图标
    - 或按 `Ctrl+Shift+P` 搜索 "Spec Kit"
 
-2. **在聊天界面输入命令**
-   - 说 "初始化项目" 开始新项目
-   - 输入 `/speckit.constitution 创建专注于代码质量的原则` 建立项目原则
-   - 输入 `/speckit.specify 构建一个任务管理应用` 创建技术规范
-   - 输入 `/speckit.plan 使用 React + Node.js + PostgreSQL` 制定实施计划
-   - 输入 `/speckit.tasks` 生成具体任务
-   - 说 "查看状态" 查看项目进度
+2. **智能交互方式**
+   
+   **🗣️ 自然语言（推荐）**
+   - 说 "初始化项目" → 自动打开初始化界面
+   - 说 "创建宪章：专注代码质量和测试" → 自动生成项目原则
+   - 说 "定义需求：构建任务管理应用" → 自动创建技术规范
+   - 说 "制定计划：使用 React + Node.js" → 自动生成实施计划
+   - 说 "分解任务" → 自动生成任务列表
+   - 说 "查看状态" → 显示项目进度
 
-**🎯 新功能：** 扩展会自动调用 AI 代理执行 slash commands，无需手动复制粘贴！
+   **⚡ 精确斜杠命令**
+   - `/speckit.constitution 创建专注于代码质量的原则`
+   - `/speckit.specify 构建一个任务管理应用`
+   - `/speckit.plan 使用 React + Node.js + PostgreSQL`
+   - `/speckit.tasks` - 生成具体任务
+   - `/speckit.analyze` - 分析项目一致性
+   - `/speckit.checklist` - 生成质量检查清单
+
+**🎯 核心优势：** 扩展会自动调用 AI 代理执行命令，完全无需手动操作！
 
 <img src="media/init.png" alt="项目初始化界面" width="600">
 
@@ -223,80 +212,101 @@ npm run package
 
 ### 支持的命令
 
-#### 🔥 核心 Slash Commands（自动执行）
+#### 🔥 完整命令支持（自动执行）
 
-| 命令 | 说明 | 示例 | 执行方式 |
+| 命令 | 说明 | 示例 | 自动执行 |
 |------|------|------|----------|
-| `/speckit.constitution` | 建立项目指导原则 | `/speckit.constitu
-| 制定计划 | 制定实施计划 | "制定计划 React + Node.js + PostgreSQL" |
-| 分解任务 | 生成具体任务列表 | "分解任务" |
-| 查看状态 | 查看项目进度 | "查看状态" |
-| 清空对话 | 清除聊天历史 | 点击右上角"清空对话"按钮 |
+| `/speckit.constitution` | 建立项目指导原则 | `/speckit.constitution 专注代码质量` | ✅ |
+| `/speckit.specify` | 生成功能规范 | `/speckit.specify 构建任务管理应用` | ✅ |
+| `/speckit.clarify` | 澄清规范细节 | `/speckit.clarify` | ✅ |
+| `/speckit.plan` | 制定技术计划 | `/speckit.plan 使用 React + Node.js` | ✅ |
+| `/speckit.checklist` | 生成质量检查清单 | `/speckit.checklist` | ✅ |
+| `/speckit.tasks` | 分解具体任务 | `/speckit.tasks` | ✅ |
+| `/speckit.analyze` | 分析项目一致性 | `/speckit.analyze` | ✅ |
+| `/speckit.implement` | 开始代码实施 | `/speckit.implement` | ✅ |
+| `/speckit.taskstoissues` | 转换为 GitHub Issues | `/speckit.taskstoissues` | ✅ |
 
-## 遇到问题？
+#### 🗣️ 自然语言命令（智能识别）
 
-### 侧边栏图标不显示
+| 说法 | 自动执行的命令 | 效果 |
+|------|---------------|------|
+| "初始化项目" | 打开初始化界面 | 可视化项目设置 |
+| "创建宪章：..." | `/speckit.constitution` | 自动生成项目原则 |
+| "定义需求：..." | `/speckit.specify` | 自动创建功能规范 |
+| "制定计划：..." | `/speckit.plan` | 自动生成技术计划 |
+| "分解任务" | `/speckit.tasks` | 自动生成任务列表 |
+| "开始实施" | `/speckit.implement` | 自动执行代码实施 |
+| "查看状态" | 显示项目进度 | 实时项目状态检查 |
+| "帮助" | 显示命令列表 | 完整命令参考 |
 
-1. **重新加载窗口**
-   - 按 `Ctrl+Shift+P`
-   - 输入 "Developer: Reload Window"
-   - 按 Enter
+#### 🎛️ 界面操作
 
-2. **重新安装扩展**
-   - 卸载 Spec Kit CN 扩展
-   - 重启 VS Code
-   - 重新安装扩展
+| 操作 | 说明 | 位置 |
+|------|------|------|
+| 工作流 | 打开可视化工作流界面 | 右上角按钮 |
+| 命令 | 显示所有可用命令 | 右上角按钮 |
+| 清空 | 清除聊天历史 | 右上角按钮 |
+| 刷新状态 | 重新检查 CLI 状态 | 初始化界面 |
 
-### CLI 未找到
+## 故障排除
 
-如果聊天界面显示 "Spec Kit CLI 不可用"：
+### 🔧 常见问题解决
 
-1. **安装 CLI**
+#### CLI 状态显示不可用
+
+**症状：** 聊天界面显示 "❌ Spec Kit CLI 不可用"
+
+**解决方案：**
+1. **点击"刷新状态"按钮** - 重新检测 CLI
+2. **安装 CLI**
    ```bash
    uv tool install specify-cn-cli --from git+https://github.com/linfee/spec-kit-cn.git
    ```
-
-2. **验证安装**
+3. **验证安装**
    ```bash
    specify-cn --version
    ```
-
-3. **使用自定义路径**
-   - 打开 VS Code 设置 (Ctrl+,)
-   - 搜索 "spec-kit.cliPath"
-   - 输入 `specify-cn` 的完整路径
-
-4. **检查 PATH**
+4. **检查 PATH 环境变量**
    ```bash
    # macOS/Linux
    which specify-cn
    
-   # Windows
+   # Windows  
    where specify-cn
    ```
 
-### 聊天界面卡住
+#### 初始化按钮卡死或超时
 
-1. **检查 CLI 状态**
-   - 在聊天框输入 "查看状态"
-   - 查看 CLI 是否可用
+**症状：** 点击"初始化项目"后长时间无响应
 
-2. **查看调试日志**
-   - 按 `Ctrl+Shift+P`
-   - 输入 "Developer: Toggle Developer Tools"
-   - 在 Console 中查看错误信息
+**解决方案：**
+1. **等待超时保护** - 45秒后会自动停止并显示错误
+2. **点击"刷新状态"** - 重新检查 CLI 状态
+3. **检查网络连接** - 初始化需要从 GitHub 下载模板
+4. **手动初始化**
+   ```bash
+   specify-cn init --here --ai claude
+   ```
 
-3. **重新加载扩展**
-   - 按 `Ctrl+Shift+P`
-   - 输入 "Developer: Reload Window"
+#### AI 代理未正确设置
 
-### 项目未初始化
+**症状：** 初始化时选择了 Gemini，但实际还是调用 Claude
 
-如果看到 "项目未初始化" 的消息：
+**解决方案：**
+1. **重新初始化项目** - 选择正确的 AI 代理
+2. **手动设置**
+   - 打开 VS Code 设置 (`Ctrl+,`)
+   - 搜索 "spec-kit.defaultAiAssistant"
+   - 选择正确的 AI 助手
 
-1. 在聊天框输入 "初始化项目"
-2. 按照助手的指引完成初始化
-3. 初始化完成后会创建 `.specify` 目录
+#### 侧边栏图标不显示
+
+**症状：** 左侧活动栏没有 🌱 图标
+
+**解决方案：**
+1. **重新加载窗口** - `Ctrl+Shift+P` → "Developer: Reload Window"
+2. **重新安装扩展**
+3. **检查扩展是否启用** - 在扩展面板中确认扩展已启用
 
 ## 键盘快捷键
 
@@ -330,7 +340,7 @@ npm run package
 ### 场景 2: 查看项目进度
 
 ```
-1. 打开 Spec Kit 聊天界面
+1. 打开 Spec Kit 界面
 2. 输入: "查看状态"
 3. 查看项目的完成进度
 4. 根据建议继续下一步
@@ -339,7 +349,7 @@ npm run package
 ### 场景 3: 更新项目规范
 
 ```
-1. 打开 Spec Kit 聊天界面
+1. 打开 Spec Kit 界面
 2. 输入: "更新规范 新增用户权限管理功能"
 3. 规范将被更新
 4. 输入: "制定计划" 重新制定计划
@@ -450,15 +460,9 @@ A: 这个扩展是 specify-cn CLI 的 VS Code 前端。它通过聊天界面调�
 **Q: 必须安装 specify-cn CLI 吗？**
 A: 是的。这个扩展依赖于 specify-cn CLI。如果未安装，聊天界面会提示安装方法。
 
-**Q: 可以离线使用吗？**
-A: 项目初始化需要从 GitHub 下载模板（需要网络）。其他功能可以离线使用。
 
-**Q: 支持远程开发吗？**
-A: 支持 SSH、WSL 和其他远程开发场景，只要 `specify-cn` 在远程环境中安装。
-
-**Q: 聊天界面支持哪些 AI 助手？**
+**Q: 支持哪些 AI 助手？**
 A: 扩展本身不依赖 AI 服务。specify-cn CLI 支持 Claude、Copilot、Gemini 等多个 AI 助手。
-
 
 
 **Q: 可以贡献代码吗？**
@@ -470,14 +474,24 @@ A: VS Code 会自动检查并提示更新。你也可以在扩展面板中手动
 **Q: 扩展的版本历史在哪里查看？**
 A: 访问 [Marketplace 页面](https://marketplace.visualstudio.com/items?itemName=hisn0w.spec-kit-vscode) 查看版本历史和更新日志。
 
----
+
 
 ## 版本信息
-du
-- **当前版本**: v0.2.0
+
+- **当前版本**: v0.2.8
 - **发布日期**: 2025年12月
 - **发布者**: hisn0w
 - **许可证**: MIT
+
+### 最新更新 (v0.2.8)
+
+🎉 **重大功能更新**
+- ✅ **完整命令支持** - 新增 analyze、checklist、constitution、taskstoissues 命令
+- ✅ **简化交互界面** - 移除输入框，专注快捷操作
+- ✅ **刷新功能** - 添加 CLI 状态刷新按钮
+- ✅ **超时保护** - 45秒超时防止卡死，改进错误处理
+- ✅ **AI 代理修复** - 修复代理设置持久化问题
+- ✅ **完全兼容** - 与 spec-kit-cn-main 项目保持一致
 
 ## 支持与反馈
 
