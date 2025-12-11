@@ -11,7 +11,7 @@
 
 **🎉 现已发布到 VS Code Marketplace！** [立即安装](https://marketplace.visualstudio.com/items?itemName=hisn0w.spec-kit-vscode)
 
-![Spec Kit VS Code Logo](media/logo_large.png)
+<img src="media/logo_large.png" alt="Spec Kit VS Code Logo" width="200">
 
 ## 功能特性
 
@@ -143,9 +143,7 @@ npm run package
 
 **🎯 新功能：** 扩展会自动调用 AI 代理执行 slash commands，无需手动复制粘贴！
 
-![项目初始化界面](media/init.png)
-
-![项目初始化界面](media/init.png)
+<img src="media/init.png" alt="项目初始化界面" width="600">
 
 ### 详细工作流
 
@@ -313,9 +311,7 @@ npm run package
 
 ## 工作流示例
 
-![完整工作流程](media/workflow.png)
-
-![完整工作流程](media/workflow.png)
+<img src="media/workflow.png" alt="完整工作流程" width="700">
 
 ### 场景 1: 启动新项目
 
