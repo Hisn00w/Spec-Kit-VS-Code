@@ -2,7 +2,7 @@
   "name": "spec-kit-vscode",
   "displayName": "Spec Kit VS Code - 规范驱动开发",
   "description": "基于 specify-cn CLI 的规范驱动开发（SDD）完整工作流 VS Code 扩展，集成智能 AI 助手和增强聊天界面",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "hisn0w",
   "license": "MIT",
   "repository": {
