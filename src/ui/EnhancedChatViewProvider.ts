@@ -111,6 +111,12 @@ export class EnhancedChatViewProvider implements vscode.WebviewViewProvider {
             description: '生成自定义质量检查清单，验证需求的完整性、清晰度和一致性',
             usage: '/speckit.checklist',
             category: 'optional'
+        },
+        {
+            command: '/speckit.taskstoissues',
+            description: '将任务转换为 GitHub Issues',
+            usage: '/speckit.taskstoissues',
+            category: 'optional'
         }
     ];
 
@@ -293,6 +299,8 @@ export class EnhancedChatViewProvider implements vscode.WebviewViewProvider {
                 return await this._handleAnalyzeCommand(args, projectStatus);
             case '/speckit.checklist':
                 return await this._handleChecklistCommand(args, projectStatus);
+            case '/speckit.taskstoissues':
+                return await this._handleTasksToIssuesCommand(args, projectStatus);
             
             default:
                 return `❌ **未知的斜杠命令**
@@ -597,6 +605,35 @@ ${fullCommand}
 3. 生成质量检查清单
 
 **建议：** 在 \`/speckit.plan\` 之后运行，确保进入实施阶段前质量达标。`;
+        } catch (error) {
+            const errorMsg = error instanceof Error ? error.message : String(error);
+            return `❌ **发送失败**
+
+错误：${errorMsg}
+
+请手动在 AI 代理中执行：\`${fullCommand}\``;
+        }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    private async _handleTasksToIssuesCommand(_args: string, _projectStatus: ProjectStatus): Promise<string> {
+        const fullCommand = `/speckit.taskstoissues`;
+        
+        try {
+            await aiAgentService.executeInTerminal(fullCommand);
+            
+            return `📋 **✅ 已发送到 AI 代理**
+
+**命令：** \`${fullCommand}\`
+
+✅ 命令已自动发送到终端中的 AI 代理。
+
+**请查看终端**，AI 代理正在：
+1. 读取 tasks.md 中的任务列表
+2. 连接到 GitHub 仓库
+3. 为每个任务创建 GitHub Issue
+
+**注意：** 需要配置 GitHub MCP 服务器才能使用此功能。`;
         } catch (error) {
             const errorMsg = error instanceof Error ? error.message : String(error);
             return `❌ **发送失败**
@@ -1190,57 +1227,6 @@ ${optionalCommands.map(cmd => `### \`${cmd.command}\`
             40% { transform: scale(1); opacity: 1; }
         }
 
-        .input-container {
-            padding: 16px;
-            border-top: 1px solid var(--vscode-panel-border);
-            background-color: var(--vscode-sideBar-background);
-        }
-
-        .input-wrapper {
-            display: flex;
-            gap: 8px;
-            align-items: flex-end;
-        }
-
-        .message-input {
-            flex: 1;
-            min-height: 36px;
-            max-height: 120px;
-            padding: 8px 12px;
-            border: 1px solid var(--vscode-input-border);
-            border-radius: 6px;
-            background-color: var(--vscode-input-background);
-            color: var(--vscode-input-foreground);
-            font-family: var(--vscode-font-family);
-            font-size: var(--vscode-font-size);
-            resize: none;
-            outline: none;
-        }
-
-        .message-input:focus {
-            border-color: var(--vscode-focusBorder);
-        }
-
-        .send-button {
-            padding: 8px 16px;
-            background-color: var(--vscode-button-background);
-            color: var(--vscode-button-foreground);
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: var(--vscode-font-size);
-            height: 36px;
-        }
-
-        .send-button:hover {
-            background-color: var(--vscode-button-hoverBackground);
-        }
-
-        .send-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
         .welcome-message {
             text-align: center;
             padding: 40px 20px;
@@ -1358,18 +1344,6 @@ ${optionalCommands.map(cmd => `### \`${cmd.command}\`
         <div class="typing-indicator" id="typingIndicator" style="display: none;">
             正在思考中<div class="typing-dots"><span></span><span></span><span></span></div>
         </div>
-        
-        <div class="input-container">
-            <div class="input-wrapper">
-                <textarea 
-                    id="messageInput" 
-                    class="message-input" 
-                    placeholder="输入斜杠命令或自然语言..."
-                    rows="1"
-                ></textarea>
-                <button id="sendButton" class="send-button">发送</button>
-            </div>
-        </div>
     </div>
 
     <script nonce="${nonce}">
@@ -1402,35 +1376,6 @@ ${optionalCommands.map(cmd => `### \`${cmd.command}\`
 
             function initializeEventListeners() {
                 console.log('Initializing event listeners');
-                
-                // 输入框事件
-                const messageInput = document.getElementById('messageInput');
-                if (messageInput) {
-                    console.log('Message input found');
-                    
-                    messageInput.addEventListener('input', function() {
-                        this.style.height = 'auto';
-                        this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-                    });
-
-                    messageInput.addEventListener('keydown', function(e) {
-                        if (e.key === 'Enter' && !e.shiftKey) {
-                            e.preventDefault();
-                            window.sendMessage();
-                        }
-                    });
-                } else {
-                    console.error('Message input not found');
-                }
-
-                // 发送按钮事件
-                const sendButton = document.getElementById('sendButton');
-                if (sendButton) {
-                    console.log('Send button found');
-                    sendButton.addEventListener('click', window.sendMessage);
-                } else {
-                    console.error('Send button not found');
-                }
 
                 // 事件委托 - 处理所有按钮点击
                 document.addEventListener('click', function(e) {
@@ -1468,34 +1413,6 @@ ${optionalCommands.map(cmd => `### \`${cmd.command}\`
             }
 
             // 全局函数定义
-            window.sendMessage = function() {
-                console.log('sendMessage called');
-                const input = document.getElementById('messageInput');
-                if (!input) {
-                    console.error('Input element not found');
-                    return;
-                }
-                
-                const message = input.value.trim();
-                console.log('Message to send:', message);
-                
-                if (message) {
-                    try {
-                        vscode.postMessage({
-                            type: 'sendMessage',
-                            message: message
-                        });
-                        console.log('Message sent to extension');
-                        input.value = '';
-                        input.style.height = 'auto';
-                    } catch (error) {
-                        console.error('Error sending message:', error);
-                    }
-                } else {
-                    console.log('Empty message, not sending');
-                }
-            };
-
             window.sendQuickMessage = function(message) {
                 console.log('sendQuickMessage called with:', message);
                 try {

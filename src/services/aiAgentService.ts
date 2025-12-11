@@ -22,7 +22,6 @@ export interface AiAgentConfig {
  * AI 代理服务 - 用于直接调用 AI 代理执行 slash commands
  */
 export class AiAgentService {
-    private currentAgent: string = 'claude';
     private agentProcess: ChildProcess | null = null;
     private outputChannel: vscode.OutputChannel;
 
@@ -110,18 +109,20 @@ export class AiAgentService {
     }
 
     /**
-     * 获取当前选择的 AI 代理
+     * 获取当前选择的 AI 代理（从 VS Code 配置读取）
      */
     getCurrentAgent(): string {
-        return this.currentAgent;
+        const config = vscode.workspace.getConfiguration('spec-kit');
+        return config.get<string>('defaultAiAssistant') || 'claude';
     }
 
     /**
-     * 设置当前 AI 代理
+     * 设置当前 AI 代理（保存到 VS Code 配置）
      */
-    setCurrentAgent(agent: string): void {
+    async setCurrentAgent(agent: string): Promise<void> {
         if (this.agents[agent]) {
-            this.currentAgent = agent;
+            const config = vscode.workspace.getConfiguration('spec-kit');
+            await config.update('defaultAiAssistant', agent, vscode.ConfigurationTarget.Workspace);
             logger.info(`AI agent set to: ${agent}`);
         }
     }

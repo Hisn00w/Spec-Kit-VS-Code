@@ -76,6 +76,42 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
             })
         );
 
+        context.subscriptions.push(
+            vscode.commands.registerCommand('spec-kit.implement', async () => {
+                vscode.window.showInformationMessage('请使用侧边栏聊天界面开始实施');
+            })
+        );
+
+        context.subscriptions.push(
+            vscode.commands.registerCommand('spec-kit.clarify', async () => {
+                vscode.window.showInformationMessage('请使用侧边栏聊天界面澄清规范');
+            })
+        );
+
+        context.subscriptions.push(
+            vscode.commands.registerCommand('spec-kit.analyze', async () => {
+                vscode.window.showInformationMessage('请使用侧边栏聊天界面分析一致性');
+            })
+        );
+
+        context.subscriptions.push(
+            vscode.commands.registerCommand('spec-kit.checklist', async () => {
+                vscode.window.showInformationMessage('请使用侧边栏聊天界面生成检查清单');
+            })
+        );
+
+        context.subscriptions.push(
+            vscode.commands.registerCommand('spec-kit.constitution', async () => {
+                vscode.window.showInformationMessage('请使用侧边栏聊天界面创建项目章程');
+            })
+        );
+
+        context.subscriptions.push(
+            vscode.commands.registerCommand('spec-kit.taskstoissues', async () => {
+                vscode.window.showInformationMessage('请使用侧边栏聊天界面将任务转换为 GitHub Issues');
+            })
+        );
+
         // 3. Check CLI availability (non-blocking)
         specKitCliService.checkCliAvailable().then(available => {
             if (available) {

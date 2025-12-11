@@ -85,6 +85,30 @@
         "description": "在指导下开始代码实施"
       },
       {
+        "command": "spec-kit.analyze",
+        "title": "分析一致性",
+        "category": "Spec Kit",
+        "description": "分析 spec.md、plan.md 和 tasks.md 之间的一致性"
+      },
+      {
+        "command": "spec-kit.checklist",
+        "title": "生成检查清单",
+        "category": "Spec Kit",
+        "description": "基于需求生成自定义检查清单"
+      },
+      {
+        "command": "spec-kit.constitution",
+        "title": "项目章程",
+        "category": "Spec Kit",
+        "description": "创建或更新项目章程"
+      },
+      {
+        "command": "spec-kit.taskstoissues",
+        "title": "任务转议题",
+        "category": "Spec Kit",
+        "description": "将任务转换为 GitHub Issues"
+      },
+      {
         "command": "spec-kit.viewConfig",
         "title": "查看配置",
         "category": "Spec Kit",

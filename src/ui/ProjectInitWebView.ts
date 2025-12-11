@@ -99,7 +99,8 @@ export class ProjectInitWebView {
 
             const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
             
-            const result = await specKitCliService.initProject(
+            // 添加超时保护
+            const initPromise = specKitCliService.initProject(
                 data.useCurrentDir ? undefined : data.projectName,
                 {
                     ai: data.aiAssistant,
@@ -110,11 +111,17 @@ export class ProjectInitWebView {
                     debug: data.enableDebug
                 }
             );
+            
+            const timeoutPromise = new Promise<never>((_, reject) => {
+                setTimeout(() => reject(new Error('初始化超时（45秒）')), 45000);
+            });
+            
+            const result = await Promise.race([initPromise, timeoutPromise]);
 
             if (result.success) {
                 // 设置 AI 代理为用户选择的代理
                 const { aiAgentService } = await import('../services/aiAgentService');
-                aiAgentService.setCurrentAgent(data.aiAssistant);
+                await aiAgentService.setCurrentAgent(data.aiAssistant);
                 
                 this.panel.webview.postMessage({
                     type: 'initSuccess',
@@ -186,19 +193,29 @@ export class ProjectInitWebView {
         }
 
         try {
-            const cliAvailable = await specKitCliService.checkCliAvailable();
-            const version = cliAvailable ? await specKitCliService.getCliVersion() : 'Not available';
+            // 添加超时保护
+            const checkPromise = Promise.all([
+                specKitCliService.checkCliAvailable(),
+                specKitCliService.getCliVersion()
+            ]);
+            
+            const timeoutPromise = new Promise<[boolean, string]>((_, reject) => {
+                setTimeout(() => reject(new Error('CLI 检查超时')), 10000);
+            });
+            
+            const [cliAvailable, version] = await Promise.race([checkPromise, timeoutPromise]);
 
             this.panel.webview.postMessage({
                 type: 'cliStatus',
                 available: cliAvailable,
-                version: version
+                version: cliAvailable ? version : 'Not available'
             });
         } catch (error) {
+            logger.error(`CLI check failed: ${error}`);
             this.panel.webview.postMessage({
                 type: 'cliStatus',
                 available: false,
-                version: 'Error checking CLI'
+                version: error instanceof Error ? error.message : 'Error checking CLI'
             });
         }
     }
@@ -701,6 +718,7 @@ export class ProjectInitWebView {
 
         <div class="button-group">
             <button class="btn btn-secondary" onclick="window.close()">取消</button>
+            <button class="btn btn-secondary" id="refreshButton" onclick="refreshCliStatus()">刷新状态</button>
             <button class="btn btn-primary" id="initButton" onclick="initProject()">初始化项目</button>
         </div>
     </div>
@@ -739,6 +757,25 @@ export class ProjectInitWebView {
             }
         }
 
+        // 刷新 CLI 状态
+        function refreshCliStatus() {
+            const refreshButton = document.getElementById('refreshButton');
+            refreshButton.disabled = true;
+            refreshButton.textContent = '刷新中...';
+            
+            updateCliStatus(false, '检查中...');
+            
+            vscode.postMessage({
+                type: 'checkCli'
+            });
+            
+            // 3秒后恢复按钮状态
+            setTimeout(() => {
+                refreshButton.disabled = false;
+                refreshButton.textContent = '刷新状态';
+            }, 3000);
+        }
+
         // 初始化项目
         function initProject() {
             const projectName = document.getElementById('projectName').value.trim();
@@ -753,6 +790,12 @@ export class ProjectInitWebView {
                 return;
             }
 
+            // 设置超时保护
+            const timeoutId = setTimeout(() => {
+                showProgress(false);
+                showAlert('初始化超时，请检查 CLI 是否正常工作', 'error');
+            }, 60000); // 60秒超时
+
             vscode.postMessage({
                 type: 'initProject',
                 data: {
@@ -764,6 +807,9 @@ export class ProjectInitWebView {
                     enableDebug
                 }
             });
+
+            // 保存超时ID以便后续清除
+            window.initTimeoutId = timeoutId;
         }
 
         function showAlert(message, type) {
@@ -815,6 +861,12 @@ export class ProjectInitWebView {
         // 监听来自扩展的消息
         window.addEventListener('message', event => {
             const message = event.data;
+            
+            // 清除超时
+            if (window.initTimeoutId && (message.type === 'initSuccess' || message.type === 'initError')) {
+                clearTimeout(window.initTimeoutId);
+                window.initTimeoutId = null;
+            }
             
             switch (message.type) {
                 case 'cliStatus':

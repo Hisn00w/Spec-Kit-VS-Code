@@ -608,7 +608,16 @@ export class SpecKitCliService {
      */
     private async runCommand(args: string[], cwd?: string): Promise<CliCommandResult> {
         const cliPath = await this.findCliPath();
-        return this.runCommandWithPath(cliPath, args, cwd);
+        
+        // 为不同命令设置不同的超时时间
+        let timeout = 120000; // 默认 120 秒
+        if (args[0] === 'init') {
+            timeout = 45000; // init 命令 45 秒超时
+        } else if (args[0] === 'check' || args[0] === 'version') {
+            timeout = 10000; // 快速命令 10 秒超时
+        }
+        
+        return this.runCommandWithPath(cliPath, args, cwd, timeout);
     }
 
     /**
