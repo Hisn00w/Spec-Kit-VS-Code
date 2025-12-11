@@ -1,3 +1,4 @@
+# Development files
 .gitignore
 .eslintrc.json
 .prettierrc.json
@@ -10,9 +11,26 @@ tslint.json
 .vscode-test/
 .vscode/
 **/*.spec.ts
-node_modules/
-!node_modules/which
 .nvmrc
 *.log
 .DS_Store
 Thumbs.db
+
+# Build and development
+out/
+node_modules/
+!node_modules/which
+
+# Git and CI
+.git/
+.github/
+*.vsix
+
+# Documentation (keep only essential)
+PUBLISHING.md
+build.bat
+build.sh
+
+# Spec Kit project files (these are examples, not needed in extension)
+.specify/
+.gemini/
