@@ -12,3 +12,7 @@ tslint.json
 **/*.spec.ts
 node_modules/
 !node_modules/which
+.nvmrc
+*.log
+.DS_Store
+Thumbs.db

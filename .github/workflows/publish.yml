@@ -30,11 +30,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Clean install dependencies
+        run: |
+          npm cache clean --force
+          rm -rf node_modules package-lock.json
+          npm install
 
       - name: Lint
         run: npm run lint
@@ -52,7 +55,10 @@ jobs:
           git push --tags
 
       - name: Package Extension
-        run: npm run package
+        run: |
+          echo "Node.js version: $(node --version)"
+          echo "npm version: $(npm --version)"
+          npm run package
 
       - name: Publish to VS Code Marketplace
         env:
