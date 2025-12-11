@@ -1,8 +1,17 @@
 # Spec Kit VS Code - VS Code Extension
 
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/hisn0w.spec-kit-vscode)](https://marketplace.visualstudio.com/items?itemName=hisn0w.spec-kit-vscode)
+[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/hisn0w.spec-kit-vscode)](https://marketplace.visualstudio.com/items?itemName=hisn0w.spec-kit-vscode)
+[![Visual Studio Marketplace Rating](https://img.shields.io/visual-studio-marketplace/r/hisn0w.spec-kit-vscode)](https://marketplace.visualstudio.com/items?itemName=hisn0w.spec-kit-vscode&ssr=false#review-details)
+[![GitHub](https://img.shields.io/github/license/Hisn00w/Spec-Kit-VS-Code)](https://github.com/Hisn00w/Spec-Kit-VS-Code/blob/main/LICENSE)
+
 🌱 一个 VS Code 扩展，基于 `specify-cn` CLI，提供规范驱动开发（Spec-Driven Development）的完整工作流。
 
 通过侧边栏聊天界面和**直接 AI 代理调用**，轻松完成从项目初始化到任务分解的全流程。
+
+**🎉 现已发布到 VS Code Marketplace！** [立即安装](https://marketplace.visualstudio.com/items?itemName=hisn0w.spec-kit-vscode)
+
+![Spec Kit VS Code Logo](media/logo_large.png)
 
 ## 功能特性
 
@@ -79,10 +88,22 @@ specify-cn --version
 
 ## 安装扩展
 
-### 从 VS Code Marketplace
+### 从 VS Code Marketplace (推荐)
+
+**方式 1: 在 VS Code 中搜索安装**
 1. 打开 VS Code
-2. 搜索 "Spec Kit Helper"
-3. 点击 Install
+2. 按 `Ctrl+Shift+X` 打开扩展面板
+3. 搜索 "Spec Kit VS Code" 或 "hisn0w.spec-kit-vscode"
+4. 点击 Install
+
+**方式 2: 从 Marketplace 网站安装**
+- 访问：https://marketplace.visualstudio.com/items?itemName=hisn0w.spec-kit-vscode
+- 点击 "Install" 按钮
+
+**方式 3: 使用命令行安装**
+```bash
+code --install-extension hisn0w.spec-kit-vscode
+```
 
 ### 从本地构建
 
@@ -121,6 +142,10 @@ npm run package
    - 说 "查看状态" 查看项目进度
 
 **🎯 新功能：** 扩展会自动调用 AI 代理执行 slash commands，无需手动复制粘贴！
+
+![项目初始化界面](media/init.png)
+
+![项目初始化界面](media/init.png)
 
 ### 详细工作流
 
@@ -288,6 +313,10 @@ npm run package
 
 ## 工作流示例
 
+![完整工作流程](media/workflow.png)
+
+![完整工作流程](media/workflow.png)
+
 ### 场景 1: 启动新项目
 
 ```
@@ -405,6 +434,13 @@ MIT License - 详见 [LICENSE](LICENSE)
 
 ## 相关链接
 
+### 扩展相关
+- **VS Code Marketplace**: https://marketplace.visualstudio.com/items?itemName=hisn0w.spec-kit-vscode
+- **GitHub 仓库**: https://github.com/Hisn00w/Spec-Kit-VS-Code
+- **问题反馈**: https://github.com/Hisn00w/Spec-Kit-VS-Code/issues
+- **发布者主页**: https://marketplace.visualstudio.com/publishers/hisn0w
+
+### 相关项目
 - [Spec Kit 官方](https://github.com/github/spec-kit)
 - [Spec Kit CN](https://github.com/Linfee/spec-kit-cn)
 - [规范驱动开发文档](https://linfee.github.io/spec-kit-cn/)
@@ -432,9 +468,26 @@ A: 扩展本身不依赖 AI 服务。specify-cn CLI 支持 Claude、Copilot、Ge
 **Q: 可以贡献代码吗？**
 A: 欢迎提交 Pull Request！请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
+**Q: 如何更新扩展？**
+A: VS Code 会自动检查并提示更新。你也可以在扩展面板中手动检查更新。
+
+**Q: 扩展的版本历史在哪里查看？**
+A: 访问 [Marketplace 页面](https://marketplace.visualstudio.com/items?itemName=hisn0w.spec-kit-vscode) 查看版本历史和更新日志。
+
 ---
 
+## 版本信息
+
+- **当前版本**: v0.2.0
+- **发布日期**: 2024年12月
+- **发布者**: hisn0w
+- **许可证**: MIT
+
+## 支持与反馈
+
 **需要帮助？** 
-- 查看 [requirements.md](requirements.md) 了解技术细节
-- 查看 [DEVELOPMENT.md](DEVELOPMENT.md) 了解开发指南
-- 访问 [Spec Kit CN 官方文档](https://linfee.github.io/spec-kit-cn/)
+- 📖 查看 [requirements.md](requirements.md) 了解技术细节
+- 🛠️ 查看 [DEVELOPMENT.md](DEVELOPMENT.md) 了解开发指南
+- 📚 访问 [Spec Kit CN 官方文档](https://linfee.github.io/spec-kit-cn/)
+- 🐛 [报告问题](https://github.com/Hisn00w/Spec-Kit-VS-Code/issues)
+- ⭐ [在 Marketplace 评分](https://marketplace.visualstudio.com/items?itemName=hisn0w.spec-kit-vscode&ssr=false#review-details)
