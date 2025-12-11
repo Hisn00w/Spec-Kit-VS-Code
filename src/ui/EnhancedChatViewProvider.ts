@@ -304,9 +304,10 @@ export class EnhancedChatViewProvider implements vscode.WebviewViewProvider {
         if (!projectStatus.isInitialized) {
             // 自动初始化项目
             try {
+                const currentAgent = aiAgentService.getCurrentAgent();
                 const initResult = await specKitCliService.initProject(undefined, {
                     here: true,
-                    ai: 'claude',
+                    ai: currentAgent,
                     force: true
                 });
 

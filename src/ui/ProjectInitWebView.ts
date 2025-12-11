@@ -110,6 +110,10 @@ export class ProjectInitWebView {
             );
 
             if (result.success) {
+                // 设置 AI 代理为用户选择的代理
+                const { aiAgentService } = await import('../services/aiAgentService');
+                aiAgentService.setCurrentAgent(data.aiAssistant);
+                
                 this.panel.webview.postMessage({
                     type: 'initSuccess',
                     message: '项目初始化成功！',
@@ -118,7 +122,7 @@ export class ProjectInitWebView {
 
                 // 显示成功消息
                 const action = await vscode.window.showInformationMessage(
-                    `项目 "${data.projectName}" 初始化成功！`,
+                    `项目 "${data.projectName}" 初始化成功！AI 代理已设置为 ${data.aiAssistant}`,
                     '打开文件夹',
                     '关闭'
                 );
