@@ -1,25 +1,24 @@
 {
   "name": "spec-kit-vscode",
-  "displayName": "Spec Kit Helper - 规范驱动开发",
-  "description": "基于 specify-cn CLI 的规范驱动开发（SDD）完整工作流 VS Code 扩展",
-  "version": "0.1.0",
-  "publisher": "your-publisher-name",
+  "displayName": "Spec Kit VS Code - 规范驱动开发",
+  "description": "基于 specify-cn CLI 的规范驱动开发（SDD）完整工作流 VS Code 扩展，集成智能 AI 助手和增强聊天界面",
+  "version": "0.2.0",
+  "publisher": "Hisn00w",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/spec-kit-vscode"
+    "url": "https://github.com/Hisn00w/Spec-Kit-VS-Code"
   },
   "bugs": {
-    "url": "https://github.com/your-username/spec-kit-vscode/issues"
+    "url": "https://github.com/Hisn00w/Spec-Kit-VS-Code/issues"
   },
-  "homepage": "https://github.com/your-username/spec-kit-vscode/blob/main/README.md",
+  "homepage": "https://github.com/Hisn00w/Spec-Kit-VS-Code/blob/main/README.md",
   "engines": {
     "vscode": "^1.90.0",
     "node": ">=18.0.0"
   },
   "categories": [
-    "Other",
-    "Productivity"
+    "Other"
   ],
   "keywords": [
     "spec-kit",
@@ -27,10 +26,15 @@
     "development",
     "planning",
     "sdd",
+    "ai-assistant",
+    "chat",
+    "intelligent",
     "规范",
     "规范驱动开发",
     "设计规范",
-    "项目计划"
+    "项目计划",
+    "智能开发",
+    "AI助手"
   ],
   "icon": "media/logo_large.png",
   "galleryBanner": {
@@ -39,16 +43,6 @@
   },
   "activationEvents": [
     "onStartupFinished",
-    "onCommand:spec-kit.init",
-    "onCommand:spec-kit.specify",
-    "onCommand:spec-kit.clarify",
-    "onCommand:spec-kit.plan",
-    "onCommand:spec-kit.tasks",
-    "onCommand:spec-kit.implement",
-    "onCommand:spec-kit.viewConfig",
-    "onCommand:spec-kit.checkCli",
-    "onCommand:spec-kit.workflow",
-    "onView:spec-kit-chat",
     "workspaceContains:.specify/**"
   ],
   "main": "./dist/extension.js",
@@ -109,9 +103,16 @@
         "description": "打开规范驱动开发工作流界面"
       },
       {
+        "command": "spec-kit.enhancedChat",
+        "title": "增强聊天",
+        "category": "Spec Kit",
+        "description": "启用增强的 AI 聊天功能和智能建议"
+      },
+      {
         "command": "spec-kit.openFile",
         "title": "打开文件",
-        "category": "Spec Kit"
+        "category": "Spec Kit",
+        "icon": "$(file)"
       }
     ],
     "viewsContainers": {
@@ -128,9 +129,16 @@
         {
           "type": "webview",
           "id": "spec-kit-chat",
-          "name": "助手",
-          "contextualTitle": "Spec Kit 助手",
+          "name": "智能助手",
+          "contextualTitle": "Spec Kit Vision 智能助手",
           "when": "true"
+        },
+        {
+          "type": "webview",
+          "id": "spec-kit-vision",
+          "name": "Vision 面板",
+          "contextualTitle": "Spec Kit Vision 可视化面板",
+          "when": "spec-kit.visionEnabled"
         }
       ]
     },

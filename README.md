@@ -81,7 +81,7 @@ specify-cn --version
 
 ### 从 VS Code Marketplace
 1. 打开 VS Code
-2. 搜索 "Spec Kit CN"
+2. 搜索 "Spec Kit Helper"
 3. 点击 Install
 
 ### 从本地构建
@@ -427,11 +427,7 @@ A: 支持 SSH、WSL 和其他远程开发场景，只要 `specify-cn` 在远程�
 **Q: 聊天界面支持哪些 AI 助手？**
 A: 扩展本身不依赖 AI 服务。specify-cn CLI 支持 Claude、Copilot、Gemini 等多个 AI 助手。
 
-**Q: 如何卸载扩展？**
-A: VS Code 扩展市场 → Spec Kit CN → Uninstall
 
-**Q: 如何报告 Bug？**
-A: 在 [GitHub Issues](https://github.com/your-username/spec-kit-vscode/issues) 中提交问题。
 
 **Q: 可以贡献代码吗？**
 A: 欢迎提交 Pull Request！请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。
