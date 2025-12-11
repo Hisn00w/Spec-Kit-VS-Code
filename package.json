@@ -2,7 +2,7 @@
   "name": "spec-kit-vscode",
   "displayName": "Spec Kit VS Code - 规范驱动开发",
   "description": "基于 specify-cn CLI 的规范驱动开发（SDD）完整工作流 VS Code 扩展，集成智能 AI 助手和增强聊天界面",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "publisher": "hisn0w",
   "license": "MIT",
   "repository": {
@@ -214,12 +214,12 @@
     "test": "node ./out/test/runTest.js",
     "package": "vsce package",
     "publish": "vsce publish",
-    "version:patch": "npm version patch && git push && git push --tags",
-    "version:minor": "npm version minor && git push && git push --tags",
-    "version:major": "npm version major && git push && git push --tags",
-    "release:patch": "npm run version:patch && npm run publish",
-    "release:minor": "npm run version:minor && npm run publish",
-    "release:major": "npm run version:major && npm run publish"
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major",
+    "release:patch": "npm version patch && npm run publish && git push && git push --tags",
+    "release:minor": "npm version minor && npm run publish && git push && git push --tags",
+    "release:major": "npm version major && npm run publish && git push && git push --tags"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

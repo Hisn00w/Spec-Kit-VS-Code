@@ -1,9 +1,7 @@
 name: Publish Extension
 
+# 只在手动触发时运行，避免与本地发布冲突
 on:
-  push:
-    tags:
-      - 'v*'
   workflow_dispatch:
     inputs:
       version_type:
@@ -45,12 +43,11 @@ jobs:
       - name: Build
         run: npm run esbuild
 
-      - name: Update version (if manual trigger)
-        if: github.event_name == 'workflow_dispatch'
+      - name: Update version
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          npm version ${{ github.event.inputs.version_type }}
+          npm version ${{ github.event.inputs.version_type }} -m "chore: bump version to %s"
           git push
           git push --tags
 
@@ -63,18 +60,13 @@ jobs:
       - name: Publish to VS Code Marketplace
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
-        run: |
-          if [ -n "$VSCE_PAT" ]; then
-            npm run publish
-          else
-            echo "VSCE_PAT not set, skipping publish"
-          fi
+        run: npm run publish
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: spec-kit-vscode-*.vsix
           generate_release_notes: true
+          tag_name: v${{ github.event.inputs.version_type == 'patch' && '' || '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
