@@ -1,0 +1,14 @@
+.gitignore
+.eslintrc.json
+.prettierrc.json
+**/*.ts
+**/*.map
+**/.eslintrc.json
+src/
+tsconfig.json
+tslint.json
+.vscode-test/
+.vscode/
+**/*.spec.ts
+node_modules/
+!node_modules/which

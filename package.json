@@ -1,0 +1,225 @@
+{
+  "name": "spec-kit-vscode",
+  "displayName": "Spec Kit Helper - 规范驱动开发",
+  "description": "基于 specify-cn CLI 的规范驱动开发（SDD）完整工作流 VS Code 扩展",
+  "version": "0.1.0",
+  "publisher": "your-publisher-name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/spec-kit-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/spec-kit-vscode/issues"
+  },
+  "homepage": "https://github.com/your-username/spec-kit-vscode/blob/main/README.md",
+  "engines": {
+    "vscode": "^1.90.0",
+    "node": ">=18.0.0"
+  },
+  "categories": [
+    "Other",
+    "Productivity"
+  ],
+  "keywords": [
+    "spec-kit",
+    "specification",
+    "development",
+    "planning",
+    "sdd",
+    "规范",
+    "规范驱动开发",
+    "设计规范",
+    "项目计划"
+  ],
+  "icon": "media/logo_large.png",
+  "galleryBanner": {
+    "color": "#ffffff",
+    "theme": "light"
+  },
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:spec-kit.init",
+    "onCommand:spec-kit.specify",
+    "onCommand:spec-kit.clarify",
+    "onCommand:spec-kit.plan",
+    "onCommand:spec-kit.tasks",
+    "onCommand:spec-kit.implement",
+    "onCommand:spec-kit.viewConfig",
+    "onCommand:spec-kit.checkCli",
+    "onCommand:spec-kit.workflow",
+    "onView:spec-kit-chat",
+    "workspaceContains:.specify/**"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "spec-kit.init",
+        "title": "初始化项目",
+        "category": "Spec Kit",
+        "description": "初始化一个新的规范驱动开发（SDD）项目"
+      },
+      {
+        "command": "spec-kit.specify",
+        "title": "生成规范",
+        "category": "Spec Kit",
+        "description": "基于项目宪章生成项目规范"
+      },
+      {
+        "command": "spec-kit.clarify",
+        "title": "澄清规范",
+        "category": "Spec Kit",
+        "description": "澄清和完善规范细节"
+      },
+      {
+        "command": "spec-kit.plan",
+        "title": "生成计划",
+        "category": "Spec Kit",
+        "description": "生成技术实施计划"
+      },
+      {
+        "command": "spec-kit.tasks",
+        "title": "分解任务",
+        "category": "Spec Kit",
+        "description": "将计划分解为具体任务"
+      },
+      {
+        "command": "spec-kit.implement",
+        "title": "开始实施",
+        "category": "Spec Kit",
+        "description": "在指导下开始代码实施"
+      },
+      {
+        "command": "spec-kit.viewConfig",
+        "title": "查看配置",
+        "category": "Spec Kit",
+        "description": "查看项目配置和状态"
+      },
+      {
+        "command": "spec-kit.checkCli",
+        "title": "检查 CLI 安装",
+        "category": "Spec Kit",
+        "description": "验证 specify-cn CLI 是否已安装"
+      },
+      {
+        "command": "spec-kit.workflow",
+        "title": "打开工作流",
+        "category": "Spec Kit",
+        "description": "打开规范驱动开发工作流界面"
+      },
+      {
+        "command": "spec-kit.openFile",
+        "title": "打开文件",
+        "category": "Spec Kit"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "spec-kit",
+          "title": "Spec Kit",
+          "icon": "media/spec-kit-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "spec-kit": [
+        {
+          "type": "webview",
+          "id": "spec-kit-chat",
+          "name": "助手",
+          "contextualTitle": "Spec Kit 助手",
+          "when": "true"
+        }
+      ]
+    },
+    "configuration": [
+      {
+        "title": "Spec Kit 扩展设置",
+        "properties": {
+          "spec-kit.cliPath": {
+            "type": "string",
+            "default": "specify-cn",
+            "description": "specify-cn CLI 可执行文件的自定义路径（留空则搜索 PATH）"
+          },
+          "spec-kit.autoDetectCli": {
+            "type": "boolean",
+            "default": true,
+            "description": "启动时自动检测 specify-cn CLI"
+          },
+          "spec-kit.debug": {
+            "type": "boolean",
+            "default": false,
+            "description": "启用调试日志"
+          },
+          "spec-kit.defaultAiAssistant": {
+            "type": "string",
+            "default": "claude",
+            "enum": [
+              "claude",
+              "copilot",
+              "cursor-agent",
+              "gemini",
+              "qwen",
+              "opencode",
+              "codex",
+              "windsurf",
+              "kilocode",
+              "auggie",
+              "codebuddy",
+              "roo",
+              "q"
+            ],
+            "description": "默认使用的 AI 助手"
+          },
+          "spec-kit.showNotifications": {
+            "type": "boolean",
+            "default": true,
+            "description": "显示命令执行的通知"
+          },
+          "spec-kit.openResultsInNewTab": {
+            "type": "boolean",
+            "default": true,
+            "description": "在新标签页中打开生成的文件"
+          },
+          "spec-kit.commandTimeout": {
+            "type": "number",
+            "default": 120,
+            "minimum": 30,
+            "maximum": 600,
+            "description": "specify-cn 命令的超时时间（秒）"
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --platform=node --target=node18",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.90.0",
+    "@types/which": "^3.0.4",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "@vscode/test-electron": "^2.4.0",
+    "@vscode/vsce": "^2.24.0",
+    "esbuild": "^0.20.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "which": "^4.0.0"
+  }
+}

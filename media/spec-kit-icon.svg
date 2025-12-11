@@ -1,0 +1,23 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 土壤基座 -->
+  <path d="M4 18 C4 18, 8 16, 12 16 C16 16, 20 18, 20 18 L20 22 L4 22 Z" fill="#8D6E63"/>
+  
+  <!-- 主茎 -->
+  <rect x="11.5" y="8" width="1" height="10" fill="#689F38" rx="0.5"/>
+  
+  <!-- 左叶子 - 大叶 -->
+  <path d="M12 12 Q6 8, 4 10 Q6 12, 12 12" fill="#8BC34A"/>
+  
+  <!-- 右叶子 - 大叶 -->
+  <path d="M12 10 Q18 6, 20 8 Q18 10, 12 10" fill="#7CB342"/>
+  
+  <!-- 左叶子阴影 -->
+  <path d="M12 12 Q8 9, 6 10 Q8 11, 12 12" fill="#689F38" opacity="0.3"/>
+  
+  <!-- 右叶子阴影 -->
+  <path d="M12 10 Q16 7, 18 8 Q16 9, 12 10" fill="#558B2F" opacity="0.3"/>
+  
+  <!-- 顶部嫩芽 -->
+  <ellipse cx="12" cy="6" rx="1.5" ry="1" fill="#AED581"/>
+  <ellipse cx="12" cy="5.5" rx="1" ry="0.7" fill="#C8E6C9"/>
+</svg>
