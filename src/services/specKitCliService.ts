@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { spawn } from 'child_process';
+import { promises as fs } from 'fs';
 import { getLogger } from '../utils/logger';
 
 const logger = getLogger();
@@ -163,23 +164,33 @@ export class SpecKitCliService {
     private stripAnsi(text: string): string {
         // 移除所有 ANSI 转义码和控制字符
         // eslint-disable-next-line no-control-regex
-        let cleaned = text
+        const cleaned = text
+            // eslint-disable-next-line no-control-regex
             .replace(/\x1B\[[0-9;]*[a-zA-Z]/g, '')           // CSI sequences (颜色等)
+            // eslint-disable-next-line no-control-regex
             .replace(/\x1B\][^\x07]*\x07/g, '')              // OSC sequences
+            // eslint-disable-next-line no-control-regex
             .replace(/\x1B\[\?[0-9;]*[a-zA-Z]/g, '')         // Private sequences
+            // eslint-disable-next-line no-control-regex
             .replace(/\x1B[PX^_][^\x1B]*\x1B\\/g, '')        // DCS, SOS, PM, APC sequences
+            // eslint-disable-next-line no-control-regex
             .replace(/\x1B\([A-Z]/g, '')                      // Character set selection
+            // eslint-disable-next-line no-control-regex
             .replace(/\x1B[=>]/g, '')                         // Keypad modes
+            // eslint-disable-next-line no-control-regex
             .replace(/\x1B[78]/g, '')                         // Save/restore cursor
+            // eslint-disable-next-line no-control-regex
             .replace(/\x1B[DEHMNOPVWXYZ\\^_]/g, '')          // Various control sequences
+            // eslint-disable-next-line no-control-regex
             .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '') // Control characters (except \t \n \r)
+            // eslint-disable-next-line no-control-regex
             .replace(/\x1B/g, '');                            // Any remaining escape characters
         
         // 过滤掉 ASCII 艺术行（包含大量方块字符或边框字符的行）
         const lines = cleaned.split('\n');
         const filteredLines = lines.filter(line => {
             // 移除只包含边框字符的行
-            const borderChars = /^[\s─│┌┐└┘├┤┬┴┼═║╔╗╚╝╠╣╦╩╬█▀▄░▒▓\-\|+]+$/;
+            const borderChars = /^[\s─│┌┐└┘├┤┬┴┼═║╔╗╚╝╠╣╦╩╬█▀▄░▒▓\-|+]+$/;
             if (borderChars.test(line.trim())) {
                 return false;
             }
@@ -226,7 +237,6 @@ export class SpecKitCliService {
         }
 
         try {
-            const fs = require('fs').promises;
             const items = await fs.readdir(targetPath);
             return { isEmpty: items.length === 0, itemCount: items.length };
         } catch {
@@ -304,7 +314,9 @@ export class SpecKitCliService {
      */
     private async verifyInitialization(): Promise<void> {
         const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
-        if (!workspaceRoot) return;
+        if (!workspaceRoot) {
+            return;
+        }
 
         const requiredPaths = [
             path.join(workspaceRoot, '.specify'),
@@ -427,7 +439,6 @@ export class SpecKitCliService {
         let hasConstitution = false;
         try {
             if (await this.pathExists(constitutionPath)) {
-                const fs = require('fs').promises;
                 const stats = await fs.stat(constitutionPath);
                 // 简单检查：如果文件大于100字节，认为已经生成
                 hasConstitution = stats.size > 100;
@@ -444,7 +455,6 @@ export class SpecKitCliService {
         try {
             const specsDirExists = await this.pathExists(specsDir);
             if (specsDirExists) {
-                const fs = require('fs').promises;
                 const specDirs = await fs.readdir(specsDir);
                 
                 // 只检查第一个规范目录
@@ -606,7 +616,6 @@ export class SpecKitCliService {
      */
     private async pathExists(filePath: string): Promise<boolean> {
         try {
-            const fs = require('fs').promises;
             await fs.access(filePath);
             return true;
         } catch {
@@ -628,7 +637,6 @@ export class SpecKitCliService {
         }
 
         try {
-            const fs = require('fs').promises;
             const memoryDir = path.join(workspaceRoot, '.specify', 'memory');
             const constitutionPath = path.join(memoryDir, 'constitution.md');
 

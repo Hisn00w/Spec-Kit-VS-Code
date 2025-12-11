@@ -60,7 +60,9 @@ export class ProjectInitWebView {
         enableGit: boolean;
         enableDebug: boolean;
     }) {
-        if (!this.panel) return;
+        if (!this.panel) {
+            return;
+        }
 
         try {
             let forceConfirmed = false;
@@ -148,7 +150,7 @@ export class ProjectInitWebView {
                 const lines = fullOutput.split('\n').filter(line => {
                     const trimmed = line.trim();
                     // 过滤掉空行和纯装饰行
-                    if (!trimmed || /^[─│┌┐└┘├┤┬┴┼═║╔╗╚╝╠╣╦╩╬\-\|+*=]+$/.test(trimmed)) {
+                    if (!trimmed || /^[─│┌┐└┘├┤┬┴┼═║╔╗╚╝╠╣╦╩╬\-|+*=]+$/.test(trimmed)) {
                         return false;
                     }
                     return true;
@@ -179,7 +181,9 @@ export class ProjectInitWebView {
     }
 
     private async handleCheckCli() {
-        if (!this.panel) return;
+        if (!this.panel) {
+            return;
+        }
 
         try {
             const cliAvailable = await specKitCliService.checkCliAvailable();

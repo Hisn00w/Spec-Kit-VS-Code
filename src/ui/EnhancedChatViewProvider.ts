@@ -20,6 +20,15 @@ interface SlashCommand {
     category: 'core' | 'optional';
 }
 
+interface ProjectStatus {
+    isInitialized: boolean;
+    hasConstitution: boolean;
+    hasSpecification: boolean;
+    hasPlan: boolean;
+    hasTasks: boolean;
+    workspaceRoot: string;
+}
+
 export class EnhancedChatViewProvider implements vscode.WebviewViewProvider {
     public static readonly viewType = 'spec-kit-chat';
     
@@ -111,7 +120,9 @@ export class EnhancedChatViewProvider implements vscode.WebviewViewProvider {
 
     public resolveWebviewView(
         webviewView: vscode.WebviewView,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _context: vscode.WebviewViewResolveContext,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _token: vscode.CancellationToken,
     ) {
         this._view = webviewView;
@@ -163,7 +174,9 @@ export class EnhancedChatViewProvider implements vscode.WebviewViewProvider {
     }
 
     private async _handleUserMessage(message: string) {
-        if (!message.trim()) return;
+        if (!message.trim()) {
+            return;
+        }
 
         // 添加用户消息
         const userMessage: ChatMessage = {
@@ -226,11 +239,11 @@ export class EnhancedChatViewProvider implements vscode.WebviewViewProvider {
         const args = parts.slice(1).join(' ');
 
         // 快速获取项目状态（使用缓存，3秒超时）
-        let projectStatus: any;
+        let projectStatus: ProjectStatus;
         try {
             projectStatus = await Promise.race([
                 specKitCliService.getProjectStatus(),
-                new Promise<any>((resolve) => setTimeout(() => resolve({
+                new Promise<ProjectStatus>((resolve) => setTimeout(() => resolve({
                     isInitialized: false,
                     hasConstitution: false,
                     hasSpecification: false,
@@ -300,7 +313,7 @@ export class EnhancedChatViewProvider implements vscode.WebviewViewProvider {
         }
     }
 
-    private async _handleConstitutionCommand(args: string, projectStatus: any): Promise<string> {
+    private async _handleConstitutionCommand(args: string, projectStatus: ProjectStatus): Promise<string> {
         if (!projectStatus.isInitialized) {
             // 自动初始化项目
             try {
@@ -371,7 +384,8 @@ ${fullCommand}
         }
     }
 
-    private async _handleSpecifyCommand(args: string, projectStatus: any): Promise<string> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    private async _handleSpecifyCommand(args: string, _projectStatus: ProjectStatus): Promise<string> {
         if (!args.trim()) {
             return `📝 **定义项目规范 (/speckit.specify)**
 
@@ -409,7 +423,8 @@ ${fullCommand}
         }
     }
 
-    private async _handlePlanCommand(args: string, projectStatus: any): Promise<string> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    private async _handlePlanCommand(args: string, _projectStatus: ProjectStatus): Promise<string> {
         if (!args.trim()) {
             return `🗺️ **创建技术实施计划 (/speckit.plan)**
 
@@ -447,7 +462,8 @@ ${fullCommand}
         }
     }
 
-    private async _handleTasksCommand(_args: string, projectStatus: any): Promise<string> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    private async _handleTasksCommand(_args: string, _projectStatus: ProjectStatus): Promise<string> {
         const fullCommand = `/speckit.tasks`;
         
         try {
@@ -475,7 +491,8 @@ ${fullCommand}
         }
     }
 
-    private async _handleImplementCommand(_args: string, projectStatus: any): Promise<string> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    private async _handleImplementCommand(_args: string, _projectStatus: ProjectStatus): Promise<string> {
         const fullCommand = `/speckit.implement`;
         
         try {
@@ -503,7 +520,8 @@ ${fullCommand}
         }
     }
 
-    private async _handleClarifyCommand(_args: string, projectStatus: any): Promise<string> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    private async _handleClarifyCommand(_args: string, _projectStatus: ProjectStatus): Promise<string> {
         const fullCommand = `/speckit.clarify`;
         
         try {
@@ -531,7 +549,8 @@ ${fullCommand}
         }
     }
 
-    private async _handleAnalyzeCommand(_args: string, projectStatus: any): Promise<string> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    private async _handleAnalyzeCommand(_args: string, _projectStatus: ProjectStatus): Promise<string> {
         const fullCommand = `/speckit.analyze`;
         
         try {
@@ -559,7 +578,8 @@ ${fullCommand}
         }
     }
 
-    private async _handleChecklistCommand(_args: string, projectStatus: any): Promise<string> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    private async _handleChecklistCommand(_args: string, _projectStatus: ProjectStatus): Promise<string> {
         const fullCommand = `/speckit.checklist`;
         
         try {
@@ -587,7 +607,7 @@ ${fullCommand}
         }
     }
 
-    private async _handleInitCommand(args: string, projectStatus: any): Promise<string> {
+    private async _handleInitCommand(args: string, projectStatus: ProjectStatus): Promise<string> {
         // 如果已经初始化，直接返回状态
         if (projectStatus.isInitialized) {
             return `✅ **项目已初始化**
@@ -618,7 +638,8 @@ specify-cn init --here --ai claude
 \`\`\``;
     }
 
-    private async _handleCheckCommand(_args: string, projectStatus: any): Promise<string> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    private async _handleCheckCommand(_args: string, _projectStatus: ProjectStatus): Promise<string> {
         // 检查 CLI 是否可用
         const cliAvailable = await specKitCliService.checkCliAvailable();
         
@@ -670,7 +691,8 @@ ${result.output || '检查完成'}
 ${this._getNextStepSuggestion(projectStatus)}`;
     }
 
-    private async _handleVersionCommand(_args: string, projectStatus: any): Promise<string> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    private async _handleVersionCommand(_args: string, _projectStatus: ProjectStatus): Promise<string> {
         // 直接执行版本命令并获取输出
         const result = await specKitCliService.executeCommand(['version']);
         const cliVersion = await specKitCliService.getCliVersion();
@@ -695,7 +717,8 @@ ${result.output || cliVersion}
 
 
 
-    private async _handleSetupCommand(_args: string, projectStatus: any): Promise<string> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    private async _handleSetupCommand(_args: string, _projectStatus: ProjectStatus): Promise<string> {
         // 检测操作系统
         const isWindows = process.platform === 'win32';
         const isMacOS = process.platform === 'darwin';
@@ -926,8 +949,8 @@ ${setupCommands.filter(cmd => cmd.startsWith('#')).map(cmd => `- ${cmd.substring
     }
 
     private async _openWorkflow() {
-        const { WorkflowWebView } = await import('./WorkflowWebView');
-        const workflowWebView = new WorkflowWebView(this._extensionUri);
+        const { WorkflowWebView: workflowWebViewClass } = await import('./WorkflowWebView');
+        const workflowWebView = new workflowWebViewClass(this._extensionUri);
         workflowWebView.show();
     }
 
@@ -967,7 +990,7 @@ ${optionalCommands.map(cmd => `### \`${cmd.command}\`
         this._addAssistantMessage(helpMessage);
     }
 
-    private _getNextStepSuggestion(status: any): string {
+    private _getNextStepSuggestion(status: ProjectStatus): string {
         if (!status.isInitialized) {
             return '使用命令面板初始化项目';
         } else if (!status.hasConstitution) {
@@ -1014,12 +1037,13 @@ ${optionalCommands.map(cmd => `### \`${cmd.command}\`
         }
     }
 
-    private _sendMessage(message: any): void {
+    private _sendMessage(message: Record<string, unknown>): void {
         if (this._view) {
             this._view.webview.postMessage(message);
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     private _getHtmlForWebview(_webview: vscode.Webview): string {
         const nonce = this._getNonce();
 

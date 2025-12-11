@@ -44,16 +44,16 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
         context.subscriptions.push(
             vscode.commands.registerCommand('spec-kit.init', async () => {
-                const { ProjectInitWebView } = await import('./ui/ProjectInitWebView');
-                const initWebView = new ProjectInitWebView(context.extensionUri);
+                const { ProjectInitWebView: projectInitWebViewClass } = await import('./ui/ProjectInitWebView');
+                const initWebView = new projectInitWebViewClass(context.extensionUri);
                 initWebView.show();
             })
         );
 
         context.subscriptions.push(
             vscode.commands.registerCommand('spec-kit.workflow', async () => {
-                const { WorkflowWebView } = await import('./ui/WorkflowWebView');
-                const workflowWebView = new WorkflowWebView(context.extensionUri);
+                const { WorkflowWebView: workflowWebViewClass } = await import('./ui/WorkflowWebView');
+                const workflowWebView = new workflowWebViewClass(context.extensionUri);
                 workflowWebView.show();
             })
         );

@@ -147,10 +147,14 @@ export class WorkflowWebView {
     }
 
     private async executeStep(stepId: string, input: string) {
-        if (!this.panel) return;
+        if (!this.panel) {
+            return;
+        }
 
         const step = this.steps.find(s => s.id === stepId);
-        if (!step) return;
+        if (!step) {
+            return;
+        }
 
         try {
             // 生成完整的斜杠命令
@@ -218,7 +222,9 @@ export class WorkflowWebView {
 
     private async copyCommand(stepId: string, input: string) {
         const step = this.steps.find(s => s.id === stepId);
-        if (!step) return;
+        if (!step) {
+            return;
+        }
 
         let fullCommand = step.command;
         if (input && input.trim()) {
@@ -230,7 +236,9 @@ export class WorkflowWebView {
     }
 
     private async refreshProjectStatus() {
-        if (!this.panel) return;
+        if (!this.panel) {
+            return;
+        }
 
         try {
             const projectStatus = await specKitCliService.getProjectStatus();
@@ -266,7 +274,9 @@ export class WorkflowWebView {
     }
 
     private updateStepStatus(stepId: string, status: string, message?: string) {
-        if (!this.panel) return;
+        if (!this.panel) {
+            return;
+        }
 
         this.panel.webview.postMessage({
             type: 'stepUpdate',
